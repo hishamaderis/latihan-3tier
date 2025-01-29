@@ -9,25 +9,30 @@
 
 ### Ubuntu
 1. Muat turun iso ubuntu server dari [sini](https://releases.ubuntu.com/24.04.1/ubuntu-24.04.1-live-server-amd64.iso)
-2. Pasangkan ubuntu dalam virtualbox
-3. Update pakej aplikasi dalam ubuntu 
+2. Klik "New" ![Klik "New"](/assets/vbox-ubuntu-1.png)
+3. Masukkan butiran VM seperti nama, iso dan lokasi penyimpanan fail disk, dan klik "Next" ![Butiran VM](/assets/vbox-ubuntu-2.png)
+4. Masukkan spesifikasi cpu dan memory VM dan klik "Next" ![CPU & Memory VM](/assets/vbox-ubuntu-3.png)
+5. Masukkan spesifikasi disk VM dan klik "Next" ![Disk VM](/assets/vbox-ubuntu-4.png)
+6. Semak konfigurasi VM dan klik "Finish" ![Confirmation](/assets/vbox-ubuntu-5.png)
+7. Klik nama VM dan klik "Start" ![Hidupkan VM](/assets/vbox-ubuntu-6.png)
+
+Update pakej aplikasi dalam ubuntu   
 `sudo apt update && sudo apt upgrade -y`
-4. Reboot vm ubuntu
+4. Reboot vm ubuntu  
 `sudo reboot`
 
 ### Almalinux
 1. Muat turun iso almalinux minimal dari [sini](https://repo.almalinux.org/almalinux/9.5/isos/x86_64/AlmaLinux-9.5-x86_64-minimal.iso)
 2. Pasangkan almalinux dalam virtualbox
-3. Update almalinux dalam virtualbox 
+3. Update almalinux dalam virtualbox  
 `sudo dnf update -y`
-4. Reboot vm almalinux
+4. Reboot vm almalinux  
 `sudo reboot`
 
 ## Pemasangan php-fpm
-
+### Ubuntu
 
 ## Pemasangan bunkerweb
-
 ### Ubuntu
 1. Pasangkan repo  
 `sudo apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring && \
