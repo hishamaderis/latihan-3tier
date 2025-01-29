@@ -30,6 +30,7 @@
 
 ### Ubuntu
 1. Pasangkan repo 
+
 `sudo apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring && \
 curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
 | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null && \
@@ -38,18 +39,22 @@ http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
 | sudo tee /etc/apt/sources.list.d/nginx.list`
 
 2. Pasangkan nginx 1.26.2 
+
 `sudo apt update && \
 sudo apt install -y nginx=1.26.2-1~$(lsb_release -cs)`
 
 Pilihan: eksport untuk aktifkan setup wizard
+
 `export UI_WIZARD=1`
 
 3. Pasangkan bunkerweb 
+
 `curl -s https://repo.bunkerweb.io/install/script.deb.sh | sudo bash && \
 sudo apt update && \
 sudo -E apt install -y bunkerweb=1.5.12`
 
 4. Masukkan konfigurasi bunkerweb
+
 echo "
 HTTP_PORT=80
 HTTPS_PORT=443
@@ -64,9 +69,11 @@ LOCAL_PHP_PATH=/var/www/html
 MAX_CLIENT_SIZE=50m" | sudo tee /etc/bunkerweb/variables.env
 
 5. Hidupkan bunkerweb, dan aktifkan ketika boot
+
 sudo systemctl enable --now bunkerweb
 
 6. Benarkan port http dan https di ufw
+
 sudo ufw allow https
 sudo ufw allow http
 
