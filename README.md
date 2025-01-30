@@ -9,16 +9,18 @@
 
 ### Ubuntu
 1. Muat turun iso ubuntu server dari [sini](https://releases.ubuntu.com/24.04.1/ubuntu-24.04.1-live-server-amd64.iso)
-2. Klik "New"  ![Klik "New"](/assets/vbox-ubuntu-1.png)
+2. Klik "New"  
+![Klik "New"](/assets/vbox-ubuntu-1.png)
 3. Masukkan butiran VM seperti nama, iso dan lokasi penyimpanan fail disk, dan klik "Next" ![Butiran VM](/assets/vbox-ubuntu-2.png)
 4. Masukkan spesifikasi cpu dan memory VM dan klik "Next" ![CPU & Memory VM](/assets/vbox-ubuntu-3.png)
 5. Masukkan spesifikasi disk VM dan klik "Next" ![Disk VM](/assets/vbox-ubuntu-4.png)
 6. Semak konfigurasi VM dan klik "Finish" ![Confirmation](/assets/vbox-ubuntu-5.png)
 7. Klik nama VM dan klik "Start" ![Hidupkan VM](/assets/vbox-ubuntu-6.png)
-
-Update pakej aplikasi dalam ubuntu   
+8. Ikuti installation wizard untuk memasang ubuntu
+9. Reboot selepas siap pemasangan
+10. Update pakej aplikasi dalam ubuntu   
 `sudo apt update && sudo apt upgrade -y`
-4. Reboot vm ubuntu  
+11. Reboot vm ubuntu  
 `sudo reboot`
 
 ### Almalinux
@@ -29,12 +31,27 @@ Update pakej aplikasi dalam ubuntu
 4. Reboot vm almalinux  
 `sudo reboot`
 
-## Pemasangan php-fpm
+## Pemasangan php
 ### Ubuntu
+1. Pasangkan php
+`sudo apt update && sudo apt install php -y`
 
-## Pemasangan bunkerweb
+2. Untuk menguji php, wujudkan fail /var/www/html/index.php dengan kod di bawah
+`echo "
+<?php
+echo "this is my php page";
+?>" | sudo tee /var/www/html/index.php`
+
+3. Hidupkan pelayan web php terbina dalam
+`cd /var/www/html/
+sudo php -S 0.0.0.0:8000`
+
+4. Akses localhost:8000 menggunakan curl atau web browser
+`curl localhost:8000`
+
+## Pemasangan nginx & bunkerweb
 ### Ubuntu
-1. Pasangkan repo  
+1. Pasangkan repo nginx
 `sudo apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring && \
 curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
 | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null && \
@@ -54,24 +71,29 @@ Pilihan: eksport untuk aktifkan setup wizard
 sudo apt update && \
 sudo -E apt install -y bunkerweb=1.5.12`
 
-4. Masukkan konfigurasi bunkerweb  
+4. Kunci versi nginx dan bunkerweb, untuk mengelakkan kemaskini perisian tanpa sengaja  
+`sudo apt-mark hold nginx bunkerweb`
+
+5. Masukkan tetapan bunkerweb  
 `echo "
+DNS_RESOLVERS=9.9.9.9 8.8.8.8 8.8.4.4
 HTTP_PORT=80
 HTTPS_PORT=443
-DNS_RESOLVERS=8.8.8.8 8.8.4.4
 API_LISTEN_IP=127.0.0.1
-DISABLE_DEFAULT_SERVER=yes
-AUTO_LETS_ENCRYPT=yes
-USE_CLIENT_CACHE=yes
-USE_GZIP=yes
-LOCAL_PHP=/run/php/php-fpm.sock
-LOCAL_PHP_PATH=/var/www/html
-MAX_CLIENT_SIZE=50m" | sudo tee /etc/bunkerweb/variables.env`
+UI_HOST=http://127.0.0.1:7000
+" | sudo tee /etc/bunkerweb/variables.env`
 
-5. Hidupkan bunkerweb, dan aktifkan ketika boot  
-`sudo systemctl enable --now bunkerweb`
+6. Wujudkan fail database untuk bunkerweb-ui
+`sudo touch /var/lib/bunkerweb/db.sqlite3`
 
-6. Benarkan port http dan https di ufw  
-`sudo ufw allow https
-sudo ufw allow http`
+7. Matikan apache2, hidupkan bunkerweb & bunkerweb-ui, dan aktifkan ketika boot  
+`sudo systemctl disable --now apache2 &&
+sudo systemctl enable --now bunkerweb && 
+sudo systemctl enable --now bunkerweb-ui`
 
+8. Untuk akses bunkerweb-ui, memandangkan bunkerweb-ui hanya "listen" di localhost, gunakan ssh tunnel
+- ssh kepada vm, dan wujudkan tunnel: ssh vm -L 7000:localhost:7000
+- buka browser, dan layari http://localhost:7000
+- masukkan username dan password yang dikehendaki, password memerlukan 8 aksara, dengan kombinasi nombor, huruf dan simbol ![Masukkan username dan password](/assets/bunkerweb-1.png)
+- masukkan UI Host, UI URL dan Server name ![Masukkan UI Host, UI URL dan Server name](/assets/bunkerweb-2.png)
+- tandakan "I've read and agree to the privacy policy" dan tekan "SETUP" ![Tekan "SETUP" selepas setuju dengan privacy policy](/assets/bunkerweb-3.png)
