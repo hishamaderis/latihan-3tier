@@ -9,7 +9,7 @@
 
 ### Ubuntu
 1. Muat turun iso ubuntu server dari [sini](https://releases.ubuntu.com/24.04.1/ubuntu-24.04.1-live-server-amd64.iso)
-2. Klik "New"  
+2. Klik "New"\  
 ![Klik "New"](/assets/vbox-ubuntu-1.png)
 3. Masukkan butiran VM seperti nama, iso dan lokasi penyimpanan fail disk, dan klik "Next" ![Butiran VM](/assets/vbox-ubuntu-2.png)
 4. Masukkan spesifikasi cpu dan memory VM dan klik "Next" ![CPU & Memory VM](/assets/vbox-ubuntu-3.png)
