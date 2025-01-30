@@ -31,8 +31,29 @@
 4. Reboot vm almalinux  
 `sudo reboot`
 
+## Pemasangan database cluster
+### Pemasangan maxscale
+1. Pasangkan keperluan  
+`sudo apt update && sudo apt install curl ca-certificates apt-transport-https -y`
+
+2. Tambahkan repo mariadb  
+`curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash`
+
+3. Pasangkan maxscale  
+`sudo apt update && sudo apt install maxscale -y`
+
+### Pemasangan lxd
+
+
+### Pemasangan mariadb
+1. Pastikan repo mariadb sudah dipasang
+
+2. Pasangkan mariadb  
+`sudo apt install mariadb-server mariadb-client mariadb-backup -y`
+
+
 ## Pemasangan php
-### Ubuntu
+
 1. Pasangkan php
 `sudo apt update && sudo apt install php -y`
 
@@ -50,7 +71,6 @@ sudo php -S 0.0.0.0:8000`
 `curl localhost:8000`
 
 ## Pemasangan nginx & bunkerweb
-### Ubuntu
 1. Pasangkan repo nginx
 `sudo apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring && \
 curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
