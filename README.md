@@ -75,7 +75,8 @@
 
 12. Masuk ke db1, dan wujudkan fail /etc/mysql/conf.d/galera.cnf
 `sudo lxc-attach -n db1`
-`echo "
+```
+echo "
 [mysqld]
 binlog_format=ROW
 default-storage-engine=innodb
@@ -95,7 +96,8 @@ wsrep_sst_method=rsync
 
 # Node Configuration
 wsrep_node_address="10.0.3.218"
-wsrep_node_name="db1"" | sudo tee /etc/mysql/conf.d/galera.cnf`
+wsrep_node_name="db1"" | sudo tee /etc/mysql/conf.d/galera.cnf
+```
 
 13. Masuk ke db2, dan wujudkan fail /etc/mysql/conf.d/galera.cnf
 `sudo lxc-attach -n db2`
