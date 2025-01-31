@@ -172,10 +172,10 @@ https://severalnines.com/blog/how-install-and-configure-maxscale-mariadb/
 3. Pasangkan maxscale  
 `sudo apt update && sudo apt install maxscale -y`
 
-4. Wujudkan akaun pengguna untuk maxscale 
+4. Wujudkan akaun pengguna untuk maxscale  
 `mysql -u root -p -h db1`
 `
-CREATE USER 'maxscale'@'%' IDENTIFIED BY 'maxscale_pw';
+CREATE USER 'maxscale'@'%' IDENTIFIED BY 'maxscale_password';
 GRANT SELECT ON mysql.user TO 'maxscale'@'%';
 GRANT SELECT ON mysql.db TO 'maxscale'@'%';
 GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'%';
@@ -185,13 +185,74 @@ GRANT SELECT ON mysql.proxies_priv TO 'maxscale'@'%';
 GRANT SELECT ON mysql.roles_mapping TO 'maxscale'@'%';
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'%';
 `
-5. Wujudkan akaun pengguna untuk client dan berikan "grants" yang sama seperti pengguna dalam database
+5. Wujudkan akaun pengguna untuk client dan berikan "grants" yang sama seperti pengguna dalam database  
 `mysql -u root -p -h db1`
 `CREATE USER 'wpuser'@'maxscale-host' IDENTIFIED BY 'my_secret_password';
 show grants for user wpuser@db1;
 grant select, insert, update, delete on *.* wpuser@maxscale-host;`
 
-6. Berikan 
+6. Konfigurasi maxscale  
+`echo "
+[maxscale]          
+threads=auto
+log_augmentation = 1 
+ms_timestamp = 1
+syslog = 1   
+[server1]                 
+type=server         
+address=10.0.3.218
+port=3306                
+protocol=MariaDBBackend
+[server2]
+type=server          
+address=10.0.3.249
+port=3306                 
+protocol=MariaDBBackend
+[server3]
+type=server     
+address=10.0.3.223
+port=3306
+protocol=MariaDBBackend
+[MariaDB-Monitor]
+type=monitor
+module=mariadbmon
+servers=server1,server2,server3
+user=maxscale
+password=maxscale_password
+monitor_interval=2s
+[Read-Only-Service]
+type=service
+router=readconnroute
+servers=server2,server3
+user=maxscale
+password=maxscale_password
+router_options=slave
+[Read-Write-Service]
+type=service
+router=readwritesplit
+servers=server1
+user=maxscale
+password=maxscale_password
+[Read-Only-Listener]
+type=listener
+service=Read-Only-Service
+protocol=MariaDBClient
+port=4008
+[Read-Write-Listener]
+type=listener
+service=Read-Write-Service
+protocol=MariaDBClient
+port=4006
+" | sudo tee /etc/maxscale/maxscale.cnf 
+
+7. Restart servis maxscale  
+`sudo systemctl restart maxscale`
+
+8. Periksa services dalam maxscale  
+`sudo maxctl list services`
+
+9. Periksa servers dalam maxscale  
+`sudo maxctl list servers`
 
 
 ## Pemasangan php
