@@ -128,8 +128,10 @@ wsrep_node_address="10.0.3.249"
 wsrep_node_name="db2"" | sudo tee /etc/mysql/conf.d/galera.cnf`
 
 14. Masuk ke db3, dan wujudkan fail /etc/mysql/conf.d/galera.cnf  
-`sudo lxc-attach -n db3`
-`echo "
+```
+sudo lxc-attach -n db3
+
+echo "
 [mysqld]
 binlog_format=ROW
 default-storage-engine=innodb
