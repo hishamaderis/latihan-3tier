@@ -75,6 +75,7 @@
 
 12. Masuk ke db1, dan wujudkan fail /etc/mysql/conf.d/galera.cnf
 `sudo lxc-attach -n db1`
+
 ```
 echo "
 [mysqld]
