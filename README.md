@@ -279,14 +279,19 @@ port=4006
 `sudo apt update && sudo apt install php -y`
 
 2. Untuk menguji php, wujudkan fail /var/www/html/index.php dengan kod di bawah
-`echo "
+```
+echo "
 <?php
 echo "this is my php page";
-?>" | sudo tee /var/www/html/index.php`
+?>" | sudo tee /var/www/html/index.php
+```
 
 3. Hidupkan pelayan web php terbina dalam
-`cd /var/www/html/
-sudo php -S 0.0.0.0:8000`
+```
+cd /var/www/html/
+
+sudo php -S 0.0.0.0:8000
+```
 
 4. Akses localhost:8000 menggunakan curl atau web browser
 `curl localhost:8000`
@@ -316,13 +321,15 @@ sudo -E apt install -y bunkerweb=1.5.12`
 `sudo apt-mark hold nginx bunkerweb`
 
 5. Masukkan tetapan bunkerweb  
-`echo "
+```
+echo "
 DNS_RESOLVERS=9.9.9.9 8.8.8.8 8.8.4.4
 HTTP_PORT=80
 HTTPS_PORT=443
 API_LISTEN_IP=127.0.0.1
 UI_HOST=http://127.0.0.1:7000
-" | sudo tee /etc/bunkerweb/variables.env`
+" | sudo tee /etc/bunkerweb/variables.env
+```
 
 6. Wujudkan fail database untuk bunkerweb-ui
 `sudo touch /var/lib/bunkerweb/db.sqlite3`
