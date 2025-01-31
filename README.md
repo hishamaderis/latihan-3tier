@@ -74,9 +74,10 @@
 `sudo lxc-ls -f`
 
 12. Masuk ke db1, dan wujudkan fail /etc/mysql/conf.d/galera.cnf
-`sudo lxc-attach -n db1`
 
 ```
+sudo lxc-attach -n db1
+
 echo "
 [mysqld]
 binlog_format=ROW
@@ -101,8 +102,10 @@ wsrep_node_name="db1"" | sudo tee /etc/mysql/conf.d/galera.cnf
 ```
 
 13. Masuk ke db2, dan wujudkan fail /etc/mysql/conf.d/galera.cnf
-`sudo lxc-attach -n db2`
-`echo "
+```
+sudo lxc-attach -n db2
+
+echo "
 [mysqld]
 binlog_format=ROW
 default-storage-engine=innodb
@@ -146,7 +149,8 @@ wsrep_sst_method=rsync
 
 # Node Configuration
 wsrep_node_address="10.0.3.223"
-wsrep_node_name="db3"" | sudo tee /etc/mysql/conf.d/galera.cnf`
+wsrep_node_name="db3"" | sudo tee /etc/mysql/conf.d/galera.cnf
+```
 
 15. Masuk ke db1 (node pertama dalam senarai gcomm), matikan mariadb dan mulakan galera cluster  
 `sudo lxc-attach -n db1 -- systemctl stop mariadb`
@@ -178,8 +182,9 @@ https://severalnines.com/blog/how-install-and-configure-maxscale-mariadb/
 `sudo apt update && sudo apt install maxscale -y`
 
 4. Wujudkan akaun pengguna untuk maxscale  
-`mysql -u root -p -h db1`
-`
+```
+mysql -u root -p -h db1
+
 CREATE USER 'maxscale'@'%' IDENTIFIED BY 'maxscale_password';
 GRANT SELECT ON mysql.user TO 'maxscale'@'%';
 GRANT SELECT ON mysql.db TO 'maxscale'@'%';
@@ -189,15 +194,16 @@ GRANT SELECT ON mysql.procs_priv TO 'maxscale'@'%';
 GRANT SELECT ON mysql.proxies_priv TO 'maxscale'@'%';
 GRANT SELECT ON mysql.roles_mapping TO 'maxscale'@'%';
 GRANT SHOW DATABASES ON *.* TO 'maxscale'@'%';
-`
+```
+
 5. Wujudkan akaun pengguna untuk client dan berikan "grants" yang sama seperti pengguna dalam database  
-`mysql -u root -p -h db1`
-`CREATE USER 'wpuser'@'maxscale-host' IDENTIFIED BY 'my_secret_password';
+```mysql -u root -p -h db1
+CREATE USER 'wpuser'@'maxscale-host' IDENTIFIED BY 'my_secret_password';
 show grants for user wpuser@db1;
-grant select, insert, update, delete on *.* wpuser@maxscale-host;`
+grant select, insert, update, delete on *.* wpuser@maxscale-host;```
 
 6. Konfigurasi maxscale  
-`echo "
+```echo "
 [maxscale]          
 threads=auto
 log_augmentation = 1 
@@ -248,7 +254,7 @@ type=listener
 service=Read-Write-Service
 protocol=MariaDBClient
 port=4006
-" | sudo tee /etc/maxscale/maxscale.cnf 
+" | sudo tee /etc/maxscale/maxscale.cnf ```
 
 7. Restart servis maxscale  
 `sudo systemctl restart maxscale`
