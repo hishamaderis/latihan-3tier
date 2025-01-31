@@ -342,6 +342,9 @@ sudo systemctl enable --now bunkerweb-ui`
 8. Untuk akses bunkerweb-ui, memandangkan bunkerweb-ui hanya "listen" di localhost, gunakan ssh tunnel
 - ssh kepada vm, dan wujudkan tunnel: ssh vm -L 7000:localhost:7000
 - buka browser, dan layari http://localhost:7000
-- masukkan username dan password yang dikehendaki, password memerlukan 8 aksara, dengan kombinasi nombor, huruf dan simbol ![Masukkan username dan password](/assets/bunkerweb-1.png)
-- masukkan UI Host, UI URL dan Server name ![Masukkan UI Host, UI URL dan Server name](/assets/bunkerweb-2.png)
-- tandakan "I've read and agree to the privacy policy" dan tekan "SETUP" ![Tekan "SETUP" selepas setuju dengan privacy policy](/assets/bunkerweb-3.png)
+- masukkan username dan password yang dikehendaki, password memerlukan 8 aksara, dengan kombinasi nombor, huruf dan simbol
+  ![Masukkan username dan password](/assets/bunkerweb-1.png)
+- masukkan UI Host, UI URL dan Server name
+  ![Masukkan UI Host, UI URL dan Server name](/assets/bunkerweb-2.png)
+- tandakan "I've read and agree to the privacy policy" dan tekan "SETUP"  
+  ![Tekan "SETUP" selepas setuju dengan privacy policy](/assets/bunkerweb-3.png)
