@@ -1,4 +1,6 @@
 # Latihan 3 tier
+## Gambarajah 3 tier architecture  
+![3 Tier Architecture](/assets/3-tier-architecture.png)
 
 ## Pemasangan virtualbox
 1. Muat turun virtualbox installer dari [sini](https://download.virtualbox.org/virtualbox/7.1.6/VirtualBox-7.1.6-167084-Win.exe)
