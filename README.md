@@ -125,7 +125,8 @@ wsrep_sst_method=rsync
 
 # Node Configuration
 wsrep_node_address="10.0.3.249"
-wsrep_node_name="db2"" | sudo tee /etc/mysql/conf.d/galera.cnf`
+wsrep_node_name="db2"" | sudo tee /etc/mysql/conf.d/galera.cnf
+```
 
 14. Masuk ke db3, dan wujudkan fail /etc/mysql/conf.d/galera.cnf  
 ```
