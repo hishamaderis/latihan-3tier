@@ -197,13 +197,16 @@ GRANT SHOW DATABASES ON *.* TO 'maxscale'@'%';
 ```
 
 5. Wujudkan akaun pengguna untuk client dan berikan "grants" yang sama seperti pengguna dalam database  
-```mysql -u root -p -h db1
+```
+mysql -u root -p -h db1
 CREATE USER 'wpuser'@'maxscale-host' IDENTIFIED BY 'my_secret_password';
 show grants for user wpuser@db1;
-grant select, insert, update, delete on *.* wpuser@maxscale-host;```
+grant select, insert, update, delete on *.* wpuser@maxscale-host;
+```
 
 6. Konfigurasi maxscale  
-```echo "
+```
+echo "
 [maxscale]          
 threads=auto
 log_augmentation = 1 
@@ -254,7 +257,8 @@ type=listener
 service=Read-Write-Service
 protocol=MariaDBClient
 port=4006
-" | sudo tee /etc/maxscale/maxscale.cnf ```
+" | sudo tee /etc/maxscale/maxscale.cnf 
+```
 
 7. Restart servis maxscale  
 `sudo systemctl restart maxscale`
